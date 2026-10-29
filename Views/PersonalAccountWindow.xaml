@@ -1,0 +1,85 @@
+﻿<Window x:Class="BanID.Views.PersonalAccountWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="BanID - Личный кабинет" Height="550" Width="800"
+        WindowStartupLocation="CenterScreen">
+    <TabControl>
+        <TabItem Header="Профиль">
+            <Grid Margin="20">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock Text="Персональные данные" FontSize="24" FontWeight="Bold" 
+                               HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                    <TextBlock x:Name="FullNameText" FontSize="16" Margin="0,5" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="PhoneText" FontSize="16" Margin="0,5" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Счета">
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Ваши счета и вклады" FontSize="16" FontWeight="Bold" 
+                   HorizontalAlignment="Center" Margin="0,0,0,15"/>
+                <DataGrid x:Name="AccountsGrid" Grid.Row="1" AutoGenerateColumns="False" 
+                  IsReadOnly="True" SelectionMode="Single" 
+                  HorizontalAlignment="Center" 
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  MaxWidth="550" MaxHeight="350">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Номер счёта" Binding="{Binding AccountNumber}" Width="160"/>
+                        <DataGridTextColumn Header="Баланс (руб.)" Binding="{Binding Balance, StringFormat={}{0:F2}}" Width="100"/>
+                        <DataGridTextColumn Header="Тип" Binding="{Binding Type}" Width="90"/>
+                        <DataGridTextColumn Header="Дата открытия" Binding="{Binding OpenDate, StringFormat={}{0:dd.MM.yyyy}}" Width="120"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <Button Grid.Row="2" Content="Заказать выписку" Width="150" Height="35" 
+                Click="OrderStatement_Click" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Заявки">
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Создать новую заявку" FontSize="16" FontWeight="Bold" 
+                           HorizontalAlignment="Center" Margin="0,0,0,15"/>
+
+                <ComboBox x:Name="RequestTypeBox" Grid.Row="1" Width="200" Height="30" 
+                          HorizontalAlignment="Center" Margin="0,0,0,15">
+                    <ComboBoxItem Content="Открытие вклада"/>
+                    <ComboBoxItem Content="Открытие счета"/>
+                    <ComboBoxItem Content="Смена персональных данных"/>
+                    <ComboBoxItem Content="Закрытие вклада"/>
+                    <ComboBoxItem Content="Закрытие счета"/>
+                </ComboBox>
+
+                <Button Grid.Row="2" Content="Создать заявку" Width="150" Height="35" 
+                        Click="CreateRequest_Click" Margin="0,5" HorizontalAlignment="Center"/>
+
+                <TextBlock Grid.Row="3" Text="История заявок" FontSize="16" FontWeight="Bold" 
+                           HorizontalAlignment="Center" Margin="0,20,0,10"/>
+
+                <DataGrid x:Name="RequestsGrid" Grid.Row="4" AutoGenerateColumns="False" 
+                          IsReadOnly="True" HorizontalAlignment="Center" Width="687">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Тип" Binding="{Binding Type}" Width="150"/>
+                        <DataGridTextColumn Header="Описание" Binding="{Binding Details}" Width="250"/>
+                        <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}" Width="160"/>
+                        <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="120"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+    </TabControl>
+</Window>
